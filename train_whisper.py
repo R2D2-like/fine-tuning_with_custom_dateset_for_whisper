@@ -69,8 +69,8 @@ def compute_metrics(pred):
     return {"wer": wer}
 
 common_voice = DatasetDict()
-common_voice["train"]= load_dataset("figfig/restaurant_order_local_test", split="train", use_auth_token=True)
-common_voice["test"]= load_dataset("figfig/restaurant_order_local_test", split="test", use_auth_token=True)
+common_voice["train"]= load_dataset("figfig/restaurant_order_HSR_test", split="train", use_auth_token=True)
+common_voice["test"]= load_dataset("figfig/restaurant_order_HSR_test", split="test", use_auth_token=True)
 
 #common_voice= load_dataset("figfig/restaurant_order_test",  use_auth_token=True)
 # print(common_voice)
@@ -93,7 +93,7 @@ model.config.forced_decoder_ids = None
 model.config.suppress_tokens = []
 
 training_args = Seq2SeqTrainingArguments(
-    output_dir="./restaurant_test_at_local",  # change to a repo name of your choice
+    output_dir="./restaurant_HSR_test",  # change to a repo name of your choice
     per_device_train_batch_size=16,
     gradient_accumulation_steps=1,  # increase by 2x for every 2x decrease in batch size
     learning_rate=1e-5,
