@@ -93,7 +93,7 @@ model.config.forced_decoder_ids = None
 model.config.suppress_tokens = []
 
 training_args = Seq2SeqTrainingArguments(
-    output_dir="./whisper-small-en",  # change to a repo name of your choice
+    output_dir="./restaurant_test_at_local",  # change to a repo name of your choice
     per_device_train_batch_size=16,
     gradient_accumulation_steps=1,  # increase by 2x for every 2x decrease in batch size
     learning_rate=1e-5,
@@ -130,16 +130,20 @@ trainer = Seq2SeqTrainer(
 )
 
 trainer.train()
+# kwargs = {
+#     "dataset_tags": "figfig/restaurant_order_test",
+#     "dataset": "test_data_at_local",  # a 'pretty' name for the training dataset
+#     "dataset_args": "config: en, split: test",
+#     "language": "en",
+#     "model_name": "restaurant_test_at_local_model",  # a 'pretty' name for your model
+#     "finetuned_from": "openai/whisper-small",
+#     "tasks": "automatic-speech-recognition",
+#     "tags": "hf-asr-leaderboard",
+# }
+# trainer.push_to_hub(**kwargs)
+trainer.push_to_hub()
 
-kwargs = {
-    "dataset_tags": "figfig/restaurant_order_local_test",
-    "dataset": "test_data",  # a 'pretty' name for the training dataset
-    "dataset_args": "config: en, split: test",
-    "language": "en",
-    "model_name": "restaurant_local_test_model",  # a 'pretty' name for your model
-    "finetuned_from": "openai/whisper-small",
-    "tasks": "automatic-speech-recognition",
-    "tags": "hf-asr-leaderboard",
-}
-
-trainer.push_to_hub(**kwargs)
+#if training_args.push_to_hub:
+ #   trainer.push_to_hub(**kwargs)
+#else:
+    #trainer.create_model_card(**kwargs)
